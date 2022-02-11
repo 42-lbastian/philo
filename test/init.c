@@ -2,22 +2,22 @@
 #include <stdio.h>
 #include <libc.h>
 
-#define LIST ((t_list *)list)
-
 typedef struct	s_list
 {
 	char *name;
 	int age;
+	int	id;
 	pthread_t *tid_sec;
 	pthread_mutex_t mutex_age;
+	pthread_mutex_t mutex_id;
 }				t_list;
 
 void  *print_hello1(void *list)
 {
-	pthread_mutex_lock(&(LIST->mutex_age));
-	printf("First %d\n", LIST->age);
-	LIST->age++;
-	pthread_mutex_unlock(&(LIST->mutex_age));
+	pthread_mutex_lock(&(((t_list *)list)->mutex_age));
+	printf("First %d\n", ((t_list *)list)->age);
+	((t_list *)list)->age++;
+	pthread_mutex_unlock(&(((t_list *)list)->mutex_age));
 	sleep(10);
 	return (NULL);
 }
@@ -27,12 +27,12 @@ void  *print_hello(void *list)
 	int i;
 
 	i = 0;
-	printf("Actual %d\n", LIST->age);
-	LIST->age++;
+	printf("Actual %d\n", ((t_list *)list)->age);
+	((t_list *)list)->age++;
 	while (i < 3)
 	{
-		if (LIST->tid_sec[i] != pthread_self())
-			pthread_cancel(LIST->tid_sec[i]);
+		if (((t_list *)list)->tid_sec[i] != pthread_self())
+			pthread_cancel(((t_list *)list)->tid_sec[i]);
 		i++;
 	}
 	pthread_exit(NULL);
@@ -40,17 +40,46 @@ void  *print_hello(void *list)
 	return (NULL);
 }
 
+void	*ft_one_two(void *list)
+{
+	int id;
+	pthread_mutex_lock(&((t_list *)list)->mutex_id);
+	id = ((t_list *)list)->id;
+	if (id % 2 == 0)
+	{
+		printf("Ok %d\n", id);
+	}
+	else
+	{
+		printf("Not Ok %d\n", id);
+	}
+	((t_list *)list)->id++;
+	pthread_mutex_unlock(&((t_list *)list)->mutex_id);
+	sleep(4);
+	pthread_mutex_lock(&((t_list *)list)->mutex_id);
+	if (id % 2 == 0)
+	{
+		printf("Ok2 %d\n", id);
+	}
+	else
+	{
+		printf("Not Ok2 %d\n", id);
+	}
+	pthread_mutex_unlock(&((t_list *)list)->mutex_id);	
+	return (NULL);
+}
+
 void *main_thread(void *list)
 {
 	int th;
 	
-	th = pthread_create(&(LIST->tid_sec[0]), NULL, print_hello1, list);
-	th = pthread_create(&(LIST->tid_sec[1]), NULL, print_hello1, list);
-	sleep(2);
-	th = pthread_create(&(LIST->tid_sec[2]), NULL, print_hello, list);
-	pthread_join(LIST->tid_sec[0], NULL);
-	pthread_join(LIST->tid_sec[1], NULL);
-	pthread_join(LIST->tid_sec[2], NULL);
+	((t_list *)list)->id = 0;
+	th = pthread_create(&(((t_list *)list)->tid_sec[0]), NULL,  ft_one_two, list);
+	th = pthread_create(&(((t_list *)list)->tid_sec[1]), NULL, ft_one_two, list);
+	th = pthread_create(&(((t_list *)list)->tid_sec[2]), NULL, ft_one_two, list);
+	pthread_join(((t_list *)list)->tid_sec[0], NULL);
+	pthread_join(((t_list *)list)->tid_sec[1], NULL);
+	pthread_join(((t_list *)list)->tid_sec[2], NULL);
 	return (NULL);
 }
 
@@ -65,6 +94,7 @@ int main(int argc, char **argv)
 	list->name = argv[1];
 	list->age = atoi(argv[2]);
 	pthread_mutex_init(&(list->mutex_age), NULL);
+	pthread_mutex_init(&(list->mutex_id), NULL);
 	th = pthread_create(&tid_main, NULL, main_thread, (void *)list);
 	pthread_join(tid_main, NULL);
 	return (0);

@@ -6,7 +6,7 @@
 /*   By: lbastian <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/10 19:08:05 by lbastian          #+#    #+#             */
-/*   Updated: 2022/02/21 17:09:54 by lbastian         ###   ########.fr       */
+/*   Updated: 2022/02/21 19:56:19 by lbastian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,19 @@ int	ft_parse(char **argv, t_main_s *main_s)
 	return (0);
 }
 
+int	ft_init_lst(t_main_s *main_s)
+{
+	main_s->list = ft_lstnew(0);
+	if (main_s->list == NULL)
+		return (1);
+	ft_lstadd_back(&(main_s->list), ft_lstnew(10));
+	ft_lstadd_back(&(main_s->list), ft_lstnew(15));
+	ft_lstadd_back(&(main_s->list), ft_lstnew(50));
+	ft_lstadd_back(&(main_s->list), ft_lstnew(100));
+	ft_print_list(main_s->list);
+	return (0);
+}
+
 int	ft_start_thread(t_main_s *main_s)
 {
 	main_s->thread.tids = malloc(sizeof(pthread_t)
@@ -48,6 +61,11 @@ int	ft_start_thread(t_main_s *main_s)
 	if (!main_s->info_p.forks)
 	{
 		ft_putstr_error("Error Malloc forks\n");
+		return (1);
+	}
+	if (ft_init_lst(main_s))
+	{
+		ft_putstr_error("Error lst\n");
 		return (1);
 	}
 	memset((void *)main_s->info_p.forks, 0, main_s->info_p.nb_philo);

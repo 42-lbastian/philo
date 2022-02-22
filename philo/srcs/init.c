@@ -6,7 +6,7 @@
 /*   By: lbastian <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/21 17:23:53 by lbastian          #+#    #+#             */
-/*   Updated: 2022/02/21 19:58:18 by lbastian         ###   ########.fr       */
+/*   Updated: 2022/02/22 17:14:48 by lbastian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,9 @@ int	ft_start_mutex(void	*main_s)
 		i++;
 	}
 	pthread_mutex_init(&(((t_main_s *)main_s)->mutex.id), NULL);
-	pthread_mutex_init(&(((t_main_s *)main_s)->mutex.fork), NULL);
+	pthread_mutex_init(&(((t_main_s *)main_s)->mutex.time), NULL);
+//	pthread_mutex_init(&(((t_main_s *)main_s)->mutex.fork), NULL);
+	pthread_mutex_init(&(((t_main_s *)main_s)->mutex.array), NULL);
 	return (0);
 }
 

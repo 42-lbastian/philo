@@ -6,7 +6,7 @@
 /*   By: lbastian <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/10 19:18:56 by lbastian          #+#    #+#             */
-/*   Updated: 2022/02/21 19:17:55 by lbastian         ###   ########.fr       */
+/*   Updated: 2022/02/22 17:10:55 by lbastian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,9 +51,10 @@ typedef struct s_time
 typedef struct s_mutex
 {
 	pthread_mutex_t	id;
-	pthread_mutex_t	fork;
 	pthread_mutex_t	*forks;
 	pthread_mutex_t	sleep;
+	pthread_mutex_t	array;
+	pthread_mutex_t	time;
 }				t_mutex;
 
 typedef struct s_main_s
@@ -71,8 +72,7 @@ int		ft_atoi(char *str);
 void	*ft_main_thread(void *main_s);
 void	*ft_philo_thread(void *main_s);
 int		ft_start_philo(void *main_s);
-t_list	*ft_lstnew(int content);
-void	ft_lstadd_back(t_list **lst, t_list *new);
-void	ft_print_list(t_list *lst);
+int		ft_change_get_array(void *main_s, int index, int content, int fact);
+int		ft_change_get_time(void *main_s, int fact);
 
 #endif

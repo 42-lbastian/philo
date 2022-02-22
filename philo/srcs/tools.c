@@ -6,7 +6,7 @@
 /*   By: lbastian <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/10 19:18:30 by lbastian          #+#    #+#             */
-/*   Updated: 2022/02/10 19:21:02 by lbastian         ###   ########.fr       */
+/*   Updated: 2022/02/22 17:23:02 by lbastian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,4 +55,28 @@ void	ft_putstr_error(char *str)
 void	ft_putstr(char *str)
 {
 	write(1, str, ft_strlen(str));
+}
+
+int	ft_change_get_array(void *main_s, int index, int content, int fact)
+{
+	int ret;
+
+	pthread_mutex_lock(&(((t_main_s *)main_s)->mutex.array));
+	ret = (((t_main_s *)main_s)->info_p.forks[index]);
+	if (fact == 1)
+		((t_main_s *)main_s)->info_p.forks[index] = content;
+	pthread_mutex_unlock(&(((t_main_s *)main_s)->mutex.array));
+	return (ret);
+}
+
+int	ft_change_get_time(void *main_s, int fact)
+{
+	int ret;
+
+	pthread_mutex_lock(&(((t_main_s *)main_s)->mutex.time));
+	ret = (((t_main_s *)main_s)->time.i);
+	if (fact == 1)
+		((t_main_s *)main_s)->time.i++;
+	pthread_mutex_unlock(&(((t_main_s *)main_s)->mutex.time));
+	return (ret);
 }

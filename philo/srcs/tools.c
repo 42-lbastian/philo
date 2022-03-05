@@ -6,7 +6,7 @@
 /*   By: lbastian <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/10 19:18:30 by lbastian          #+#    #+#             */
-/*   Updated: 2022/02/22 17:23:02 by lbastian         ###   ########.fr       */
+/*   Updated: 2022/02/25 11:20:23 by Bastian          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,7 @@ int	ft_change_get_array(void *main_s, int index, int content, int fact)
 	return (ret);
 }
 
+/*
 int	ft_change_get_time(void *main_s, int fact)
 {
 	int ret;
@@ -79,4 +80,9 @@ int	ft_change_get_time(void *main_s, int fact)
 		((t_main_s *)main_s)->time.i++;
 	pthread_mutex_unlock(&(((t_main_s *)main_s)->mutex.time));
 	return (ret);
+}*/
+
+suseconds_t	ft_gettime(void * main_s)
+{
+	return ((((t_main_s *)main_s)->time.tv_usec - ((t_main_s *)main_s)->start_t.us));
 }

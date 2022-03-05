@@ -6,7 +6,7 @@
 /*   By: lbastian <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/11 14:24:00 by lbastian          #+#    #+#             */
-/*   Updated: 2022/03/05 15:21:12 by lbastian         ###   ########.fr       */
+/*   Updated: 2022/03/05 15:24:58 by lbastian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 int	ft_take_fork(int next, int prev, void *main_s)
 {
-	int i;
-	int y;
+	int	i;
+	int	y;
 
 	y = 0;
 /*	while (ft_get_content_index(main_s, ((t_main_s *)main_s)->list, next == 1)

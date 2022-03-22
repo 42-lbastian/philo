@@ -6,7 +6,7 @@
 /*   By: lbastian <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/10 19:18:30 by lbastian          #+#    #+#             */
-/*   Updated: 2022/02/25 11:20:23 by Bastian          ###   ########.fr       */
+/*   Updated: 2022/03/22 15:45:37 by Bastian          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,20 +69,17 @@ int	ft_change_get_array(void *main_s, int index, int content, int fact)
 	return (ret);
 }
 
-/*
-int	ft_change_get_time(void *main_s, int fact)
+suseconds_t ft_get_mili(struct timeval time)
 {
-	int ret;
-
-	pthread_mutex_lock(&(((t_main_s *)main_s)->mutex.time));
-	ret = (((t_main_s *)main_s)->time.i);
-	if (fact == 1)
-		((t_main_s *)main_s)->time.i++;
-	pthread_mutex_unlock(&(((t_main_s *)main_s)->mutex.time));
-	return (ret);
-}*/
+	return ((time.tv_sec) * 1000 + (time.tv_usec) / 1000);
+}
 
 suseconds_t	ft_gettime(void * main_s)
 {
-	return ((((t_main_s *)main_s)->time.tv_usec - ((t_main_s *)main_s)->start_t.us));
+	gettimeofday(&(((t_main_s *)main_s)->time_actual), NULL);
+	printf("Sec : %ld %ld\n",((t_main_s *)main_s)->time_actual.tv_sec, ((t_main_s *)main_s)->time_start.tv_sec);
+	printf("Usec : %d %d\n",((t_main_s *)main_s)->time_actual.tv_usec, ((t_main_s *)main_s)->time_start.tv_usec);
+	printf("Mili : %d-%d\t%d\n\n", ft_get_mili(((t_main_s *)main_s)->time_actual), ft_get_mili(((t_main_s *)main_s)->time_start), ft_get_mili(((t_main_s *)main_s)->time_actual) - ft_get_mili(((t_main_s *)main_s)->time_start));
+	return (ft_get_mili(((t_main_s *)main_s)->time_actual) - ft_get_mili(((t_main_s *)main_s)->time_start));
 }
+

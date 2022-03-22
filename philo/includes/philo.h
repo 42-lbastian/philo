@@ -6,7 +6,7 @@
 /*   By: lbastian <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/10 19:18:56 by lbastian          #+#    #+#             */
-/*   Updated: 2022/02/25 11:23:24 by Bastian          ###   ########.fr       */
+/*   Updated: 2022/03/21 15:54:31 by Bastian          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,11 +44,6 @@ typedef struct s_thread
 	pthread_t	*tids;
 }				t_thread;
 
-typedef struct s_time
-{
-	suseconds_t	us;
-}				t_time;
-
 typedef struct s_mutex
 {
 	pthread_mutex_t	id;
@@ -62,8 +57,8 @@ typedef struct s_main_s
 {
 	t_info_p		info_p;
 	t_thread		thread;
-	struct timeval	time;
-	t_time			start_t;
+	struct timeval	time_actual;
+	struct timeval	time_start;
 	t_mutex			mutex;
 	t_list			*list;
 }				t_main_s;
@@ -75,7 +70,6 @@ void		*ft_main_thread(void *main_s);
 void		*ft_philo_thread(void *main_s);
 int			ft_start_philo(void *main_s);
 int			ft_change_get_array(void *main_s, int index, int content, int fact);
-int			ft_change_get_time(void *main_s, int fact);
 suseconds_t	ft_gettime(void *main_s);
 
 #endif

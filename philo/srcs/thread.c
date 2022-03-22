@@ -6,7 +6,7 @@
 /*   By: lbastian <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/11 14:24:00 by lbastian          #+#    #+#             */
-/*   Updated: 2022/03/05 15:24:58 by lbastian         ###   ########.fr       */
+/*   Updated: 2022/03/22 16:16:35 by Bastian          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,6 @@
 
 int	ft_take_fork(int next, int prev, void *main_s)
 {
-	int	i;
-	int	y;
-
-	y = 0;
 /*	while (ft_get_content_index(main_s, ((t_main_s *)main_s)->list, next == 1)
 			&& y < ((t_main_s *)main_s)->info_p.time_die - ((t_main_s *)main_s)->info_p.time_sleep)
 	{
@@ -29,28 +25,39 @@ int	ft_take_fork(int next, int prev, void *main_s)
 		printf("%d Mort\n", next);
 		return (1);
 	}*/
+
+	while (ft_change_get_array(main_s, prev, 0, 0) == 1 || ft_change_get_array(main_s, next, 0, 0) == 1)
+	{}
+	ft_change_get_array(main_s, next, 1, 1);
+	ft_change_get_array(main_s, prev, 1, 1);
 	pthread_mutex_lock(&(((t_main_s *)main_s)->mutex.forks[next]));
-//	ft_change_get_array(main_s, next, 1, 1);
-	gettimeofday(&(((t_main_s *)main_s)->time), NULL);
 	printf("%d %d has taken a fork\n", ft_gettime(main_s), next);
 	pthread_mutex_lock(&(((t_main_s *)main_s)->mutex.forks[prev]));
-//	ft_change_get_array(main_s, prev, 1, 1);
-//	printf("%d has taken a fork\n", ((t_main_s *)main_s)->time.i, next);
-//	gettimeofday(&(((t_main_s *)main_s)->time), NULL);
 	printf("%d %d has taken a fork\n", ft_gettime(main_s), next);
-//	printf("%d %d is eating\n", ft_change_get_time(main_s, 0), next);
-//	ft_change_get_array(main_s, prev, 0, 1);
-//	ft_change_get_array(main_s, next, 0, 1);
-//	printf("%d %d is eating\n", ((t_main_s *)main_s)->time.i, next);
+	printf("%d %d is eating\n", ft_gettime(main_s), next);
+
+	usleep(((t_main_s *)main_s)->info_p.time_eat * 1000);
+
 	pthread_mutex_unlock(&(((t_main_s *)main_s)->mutex.forks[prev]));
 	pthread_mutex_unlock(&(((t_main_s *)main_s)->mutex.forks[next]));
+	ft_change_get_array(main_s, prev, 0, 1);
+	ft_change_get_array(main_s, next, 0, 1);	
+
+	return (0);
+}
+
+int		ft_sleep(int next, void	*main_s)
+{
+	int i;
+
 	i = 0;
+	printf("%d %d is sleeping\n", ft_gettime(main_s), next);
 	while (i <= ((t_main_s *)main_s)->info_p.time_eat /* || signal  */)
 	{
-		usleep(1);
+		usleep(1000);
 		i++;
 	}
-//	printf("%d %d is sleeping\n", ft_change_get_time(main_s, 0), next);
+	printf("%d %d is thinking\n", ft_gettime(main_s), next);
 	return (0);
 }
 
@@ -58,9 +65,13 @@ void	*ft_philo_action(int next, int prev, void *main_s)
 {
 	while (1)
 	{
-		if (ft_take_fork(next, prev, main_s) == 1)
-		usleep(1000);
-		exit(0);
+		if (ft_take_fork(next, prev, main_s) || ft_sleep(next, main_s))
+		{
+			printf("%d %d died\n", ft_gettime(main_s), next);
+			exit(0);
+		}
+	//	usleep(1000);
+//		exit(0);
 	}
 	return (NULL);
 }
@@ -80,26 +91,24 @@ void	*ft_philo_thread(void *main_s)
 	next = id;
 	((t_main_s *)main_s)->info_p.id++;
 	pthread_mutex_unlock(&(((t_main_s *)main_s)->mutex.id));
-	if (id % 2 == 1)
-		usleep(1000);
-	if (id % 2 == 0)
-		ft_take_fork(next, prev, main_s);
+//	if (id % 2 == 1)
+//		usleep(1000);
+//	if (id % 2 == 0)
+//		ft_take_fork(next, prev, main_s);
 	ft_philo_action(next, prev, main_s);
 	return (NULL);
 }
 
 void	*ft_main_thread(void *main_s)
 {
-	gettimeofday(&(((t_main_s *)main_s)->time), NULL);
-	((t_main_s *)main_s)->start_t.us = ((t_main_s *)main_s)->time.tv_usec;
-//	((t_main_s *)main_s)->time.i = 0;
+	gettimeofday(&(((t_main_s *)main_s)->time_start), NULL);
 	if (ft_start_philo(main_s))
 		return (NULL);
 	while (1 && ((t_main_s *)main_s)->info_p.nb_to_eat != 0)
 	{
 //		if (((t_main_s *)main_s)->time.i == 1000)
 //			break ;
-		usleep(1);
+	//	usleep(1);
 //		ft_change_get_time(main_s, 1);
 	}
 	return (NULL);

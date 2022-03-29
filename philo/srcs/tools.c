@@ -6,7 +6,7 @@
 /*   By: lbastian <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/10 19:18:30 by lbastian          #+#    #+#             */
-/*   Updated: 2022/03/22 15:45:37 by Bastian          ###   ########.fr       */
+/*   Updated: 2022/03/26 01:53:05 by Bastian          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,9 +77,10 @@ suseconds_t ft_get_mili(struct timeval time)
 suseconds_t	ft_gettime(void * main_s)
 {
 	gettimeofday(&(((t_main_s *)main_s)->time_actual), NULL);
-	printf("Sec : %ld %ld\n",((t_main_s *)main_s)->time_actual.tv_sec, ((t_main_s *)main_s)->time_start.tv_sec);
+/*	printf("Sec : %ld %ld\n",((t_main_s *)main_s)->time_actual.tv_sec, ((t_main_s *)main_s)->time_start.tv_sec);
 	printf("Usec : %d %d\n",((t_main_s *)main_s)->time_actual.tv_usec, ((t_main_s *)main_s)->time_start.tv_usec);
 	printf("Mili : %d-%d\t%d\n\n", ft_get_mili(((t_main_s *)main_s)->time_actual), ft_get_mili(((t_main_s *)main_s)->time_start), ft_get_mili(((t_main_s *)main_s)->time_actual) - ft_get_mili(((t_main_s *)main_s)->time_start));
+	*/
 	return (ft_get_mili(((t_main_s *)main_s)->time_actual) - ft_get_mili(((t_main_s *)main_s)->time_start));
 }
 

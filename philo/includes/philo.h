@@ -6,7 +6,7 @@
 /*   By: lbastian <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/10 19:18:56 by lbastian          #+#    #+#             */
-/*   Updated: 2022/03/21 15:54:31 by Bastian          ###   ########.fr       */
+/*   Updated: 2022/03/26 01:53:06 by Bastian          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ typedef struct s_main_s
 	t_thread		thread;
 	struct timeval	time_actual;
 	struct timeval	time_start;
+	struct timeval	time_die;
 	t_mutex			mutex;
 	t_list			*list;
 }				t_main_s;

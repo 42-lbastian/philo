@@ -6,7 +6,7 @@
 /*   By: lbastian <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/10 19:08:05 by lbastian          #+#    #+#             */
-/*   Updated: 2022/02/22 17:05:47 by lbastian         ###   ########.fr       */
+/*   Updated: 2022/03/29 16:28:19 by lbastian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,22 +56,23 @@ int	ft_start_thread(t_main_s *main_s)
 {
 	main_s->thread.tids = malloc(sizeof(pthread_t)
 			* (main_s->info_p.nb_philo + 1));
+	main_s->time_die = malloc(sizeof(struct timeval) * main_s->info_p.nb_philo);
+	main_s->info_p.forks = malloc(sizeof(char) * main_s->info_p.nb_philo);
 	if (!main_s->thread.tids)
 	{
 		ft_putstr_error("Error Malloc tids\n");
 		return (1);
 	}
-	main_s->info_p.forks = malloc(sizeof(char) * main_s->info_p.nb_philo);
 	if (!main_s->info_p.forks)
 	{
 		ft_putstr_error("Error Malloc forks\n");
 		return (1);
 	}
-/*	if (ft_init_lst(main_s))
+	if (!main_s->time_die)
 	{
-		ft_putstr_error("Error lst\n");
+		ft_putstr_error("Error Malloc time die\n");
 		return (1);
-	}*/
+	}
 	memset((void *)main_s->info_p.forks, 0, main_s->info_p.nb_philo);
 	pthread_create(&(main_s->thread.tids[0]), NULL,
 		ft_main_thread, (void *)main_s);

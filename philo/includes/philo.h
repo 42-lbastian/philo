@@ -6,7 +6,7 @@
 /*   By: lbastian <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/10 19:18:56 by lbastian          #+#    #+#             */
-/*   Updated: 2022/03/26 01:53:06 by Bastian          ###   ########.fr       */
+/*   Updated: 2022/03/29 16:21:59 by lbastian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ typedef struct s_main_s
 	t_thread		thread;
 	struct timeval	time_actual;
 	struct timeval	time_start;
-	struct timeval	time_die;
+	struct timeval	*time_die;
 	t_mutex			mutex;
 	t_list			*list;
 }				t_main_s;
@@ -71,6 +71,7 @@ void		*ft_main_thread(void *main_s);
 void		*ft_philo_thread(void *main_s);
 int			ft_start_philo(void *main_s);
 int			ft_change_get_array(void *main_s, int index, int content, int fact);
-suseconds_t	ft_gettime(void *main_s);
+int			ft_get_timestamp(void *main_s);
+int			ft_get_timedie(void *main_s, int id);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: lbastian <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/11 14:24:00 by lbastian          #+#    #+#             */
-/*   Updated: 2022/03/29 16:51:01 by lbastian         ###   ########.fr       */
+/*   Updated: 2022/04/01 16:57:22 by Bastian          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,13 @@ int	ft_take_fork(int next, int prev, void *main_s)
 	ft_change_get_array(main_s, next, 1, 1);
 	ft_change_get_array(main_s, prev, 1, 1);
 	pthread_mutex_lock(&(((t_main_s *)main_s)->mutex.forks[next]));
-	printf("%d %d has taken a fork\n", ft_get_timestamp(main_s), next);
+	ft_write_status(" has taken a fork\n", next, main_s);
+//	printf("%d %d has taken a fork\n", ft_get_timestamp(main_s), next);
 	pthread_mutex_lock(&(((t_main_s *)main_s)->mutex.forks[prev]));
-	printf("%d %d has taken a fork\n", ft_get_timestamp(main_s), next);
-	printf("%d %d is eating\n", ft_get_timestamp(main_s), next);
+	ft_write_status(" has taken a fork\n", next, main_s);
+//	printf("%d %d has taken a fork\n", ft_get_timestamp(main_s), next);
+	ft_write_status(" is eating\n", next, main_s);
+//	printf("%d %d is eating\n", ft_get_timestamp(main_s), next);
 
 	usleep(((t_main_s *)main_s)->info_p.time_eat * 1000);
 
@@ -45,7 +48,8 @@ int		ft_sleep(int next, void	*main_s)
 	int i;
 
 	i = 0;
-	printf("%d %d is sleeping\n", ft_get_timestamp(main_s), next);
+	ft_write_status(" is sleeping\n", next, main_s);
+//	printf("%d %d is sleeping\n", ft_get_timestamp(main_s), next);
 	gettimeofday(&(((t_main_s *)main_s)->time_die[next]), NULL);
 	while (i <= ((t_main_s *)main_s)->info_p.time_sleep /* || signal  */)
 	{
@@ -57,7 +61,8 @@ int		ft_sleep(int next, void	*main_s)
 		usleep(1000);
 		i++;
 	}
-	printf("%d %d is thinking\n", ft_get_timestamp(main_s), next);
+	ft_write_status(" is thinking\n", next, main_s);
+//	printf("%d %d is thinking\n", ft_get_timestamp(main_s), next);
 	return (0);
 }
 
@@ -93,6 +98,9 @@ void	*ft_philo_thread(void *main_s)
 
 void	*ft_main_thread(void *main_s)
 {
+	unsigned int i;
+
+	i = 0;
 	gettimeofday(&(((t_main_s *)main_s)->time_start), NULL);
 	if (ft_start_philo(main_s))
 		return (NULL);

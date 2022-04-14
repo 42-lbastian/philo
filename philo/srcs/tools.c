@@ -6,7 +6,7 @@
 /*   By: lbastian <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/10 19:18:30 by lbastian          #+#    #+#             */
-/*   Updated: 2022/03/29 16:22:00 by lbastian         ###   ########.fr       */
+/*   Updated: 2022/04/01 16:57:30 by Bastian          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,18 +74,51 @@ unsigned long	ft_get_mili(struct timeval time)
 	return ((time.tv_sec) * 1000 + (time.tv_usec) / 1000);
 }
 
-int	ft_get_timestamp(void * main_s)
+unsigned int	ft_get_timestamp(void * main_s)
 {
 	gettimeofday(&(((t_main_s *)main_s)->time_actual), NULL);
-/*	printf("Sec : %ld %ld\n",((t_main_s *)main_s)->time_actual.tv_sec, ((t_main_s *)main_s)->time_start.tv_sec);
-	printf("Usec : %d %d\n",((t_main_s *)main_s)->time_actual.tv_usec, ((t_main_s *)main_s)->time_start.tv_usec);
-	printf("Mili : %d-%d\t%d\n\n", ft_get_mili(((t_main_s *)main_s)->time_actual), ft_get_mili(((t_main_s *)main_s)->time_start), ft_get_mili(((t_main_s *)main_s)->time_actual) - ft_get_mili(((t_main_s *)main_s)->time_start));
-	*/
-	return ((int)(ft_get_mili(((t_main_s *)main_s)->time_actual) - ft_get_mili(((t_main_s *)main_s)->time_start)));
+	return ((unsigned int)(ft_get_mili(((t_main_s *)main_s)->time_actual) - ft_get_mili(((t_main_s *)main_s)->time_start)));
 }
 
-int	ft_get_timedie(void * main_s, int id)
+unsigned int	ft_get_timedie(void * main_s, int id)
 {
 	gettimeofday(&(((t_main_s *)main_s)->time_actual), NULL);
 	return (ft_get_mili(((t_main_s *)main_s)->time_actual) - ft_get_mili(((t_main_s *)main_s)->time_die[id]));
+}
+
+void	ft_putchar(char c)
+{
+	write(1, &c, 1);
+}
+
+void	ft_putnbr(unsigned int nb)
+{
+	unsigned int	size;
+	int 			res;
+
+	size = 1;
+	if (nb == 0)
+		write(1, "0", 1);
+	else
+	{
+		while (size <= nb)
+			size *= 10;
+		size /= 10;
+		while (size != 0)
+		{
+			res = nb / size % 10;
+			ft_putchar(res + '0');
+			size /= 10;
+		}
+	}
+}
+
+void	ft_write_status(char *str, unsigned int next, void *main_s)
+{
+	pthread_mutex_lock(&(((t_main_s *)main_s)->mutex.print));
+	ft_putnbr(ft_get_timestamp(main_s));
+	write(1, " ", 1);
+	ft_putnbr(next);
+	write(1, str, ft_strlen(str));
+	pthread_mutex_unlock(&(((t_main_s *)main_s)->mutex.print));
 }

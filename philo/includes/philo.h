@@ -6,7 +6,7 @@
 /*   By: lbastian <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/10 19:18:56 by lbastian          #+#    #+#             */
-/*   Updated: 2022/04/01 16:50:40 by Bastian          ###   ########.fr       */
+/*   Updated: 2022/04/15 16:02:10 by lbastian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ typedef struct s_info_p
 	int				*forks;
 }				t_info_p;
 
+/*
 typedef struct s_list
 {
 	int				content;
@@ -38,6 +39,7 @@ typedef struct s_list
 	struct s_list	*next;
 	struct s_list	*prev;
 }				t_list;
+*/
 
 typedef struct s_thread
 {
@@ -48,7 +50,7 @@ typedef struct s_mutex
 {
 	pthread_mutex_t	id;
 	pthread_mutex_t	*forks;
-	pthread_mutex_t	array;
+	pthread_mutex_t	*array;
 	pthread_mutex_t	print;
 }				t_mutex;
 
@@ -60,7 +62,7 @@ typedef struct s_main_s
 	struct timeval	time_start;
 	struct timeval	*time_die;
 	t_mutex			mutex;
-	t_list			*list;
+//	t_list			*list;
 }				t_main_s;
 
 void			ft_putstr(char *str);

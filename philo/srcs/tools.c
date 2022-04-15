@@ -6,7 +6,7 @@
 /*   By: lbastian <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/10 19:18:30 by lbastian          #+#    #+#             */
-/*   Updated: 2022/04/01 16:57:30 by Bastian          ###   ########.fr       */
+/*   Updated: 2022/04/15 16:04:31 by lbastian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,11 +61,11 @@ int	ft_change_get_array(void *main_s, int index, int content, int fact)
 {
 	int ret;
 
-	pthread_mutex_lock(&(((t_main_s *)main_s)->mutex.array));
+	pthread_mutex_lock(&(((t_main_s *)main_s)->mutex.array[index]));
 	ret = (((t_main_s *)main_s)->info_p.forks[index]);
 	if (fact == 1)
 		((t_main_s *)main_s)->info_p.forks[index] = content;
-	pthread_mutex_unlock(&(((t_main_s *)main_s)->mutex.array));
+	pthread_mutex_unlock(&(((t_main_s *)main_s)->mutex.array[index]));
 	return (ret);
 }
 

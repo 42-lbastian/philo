@@ -6,7 +6,7 @@
 /*   By: lbastian <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/10 19:18:56 by lbastian          #+#    #+#             */
-/*   Updated: 2022/04/15 16:56:05 by lbastian         ###   ########.fr       */
+/*   Updated: 2022/04/15 18:03:14 by lbastian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@
 typedef struct s_info_p
 {
 	int				nb_philo;
-	unsigned int	time_die;
+	int				time_die;
 	int				time_eat;
 	int				time_sleep;
 	int				nb_to_eat;

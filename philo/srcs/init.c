@@ -6,7 +6,7 @@
 /*   By: lbastian <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/21 17:23:53 by lbastian          #+#    #+#             */
-/*   Updated: 2022/04/15 16:27:40 by lbastian         ###   ########.fr       */
+/*   Updated: 2022/04/15 16:37:15 by lbastian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,12 +40,14 @@ int	ft_start_mutex(void	*main_s)
 int	ft_start_philo(void *main_s)
 {
 	int	i;
+	struct timeval time_start;
 
 	i = 0;
 	((t_main_s *)main_s)->info_p.id = 0;
 	if (ft_start_mutex(main_s))
 		return (1);
-	gettimeofday(&(((t_main_s *)main_s)->time_start), NULL);
+	gettimeofday(&(time_start), NULL);
+	((t_main_s *)main_s)->time_start = ft_get_mili(time_start);
 	while (i < ((t_main_s *)main_s)->info_p.nb_philo)
 	{
 		pthread_create(&(((t_main_s *)main_s)->thread.tids

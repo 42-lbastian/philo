@@ -6,7 +6,7 @@
 /*   By: lbastian <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/10 19:18:30 by lbastian          #+#    #+#             */
-/*   Updated: 2022/04/15 16:56:13 by lbastian         ###   ########.fr       */
+/*   Updated: 2022/04/19 19:02:33 by lbastian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,19 +47,14 @@ int	ft_atoi(char *str)
 	return (res);
 }
 
-void	ft_putstr_error(char *str)
+void	ft_putstr_fd(char *str, int fd)
 {
-	write(2, str, ft_strlen(str));
-}
-
-void	ft_putstr(char *str)
-{
-	write(1, str, ft_strlen(str));
+	write(fd, str, ft_strlen(str));
 }
 
 int	ft_change_get_array(t_main_s *main, int index, int content, int fact)
 {
-	int ret;
+	int	ret;
 
 	pthread_mutex_lock(&(main->mutex.array[index]));
 	ret = (main->info_p.forks[index]);
@@ -74,16 +69,16 @@ unsigned long	ft_get_mili(struct timeval time)
 	return ((time.tv_sec) * 1000 + (time.tv_usec) / 1000);
 }
 
-unsigned int	ft_get_timestamp(t_main_s * main)
+unsigned int	ft_get_timestamp(t_main_s *main)
 {
 	gettimeofday(&(main->time_actual), NULL);
 	return ((unsigned int)(ft_get_mili(main->time_actual) - main->time_start));
 }
 
-unsigned int	ft_get_timedie(t_main_s * main, int id)
+unsigned int	ft_get_timedie(t_main_s *main, int id)
 {
 	gettimeofday(&(main->time_actual), NULL);
-	return (ft_get_mili(main->time_actual) - ft_get_mili(main->time_die[id]));
+	return (ft_get_mili(main->time_actual) - main->time_die[id]);
 }
 
 void	ft_putchar(char c)
@@ -93,9 +88,11 @@ void	ft_putchar(char c)
 
 void	ft_putnbr(unsigned int nb)
 {
-	unsigned int	size;
-	int 			res;
+	unsigned long	size;
+	char			str[11];
+	int				i;
 
+	i = 0;
 	size = 1;
 	if (nb == 0)
 		write(1, "0", 1);
@@ -106,19 +103,34 @@ void	ft_putnbr(unsigned int nb)
 		size /= 10;
 		while (size != 0)
 		{
-			res = nb / size % 10;
-			ft_putchar(res + '0');
+			str[i] = ((nb / size % 10) + '0');
 			size /= 10;
+			i++;
 		}
+		str[i] = '\0';
+		write(1, str, ft_strlen(str));
 	}
 }
 
-void	ft_write_status(char *str, unsigned int next, t_main_s *main)
+void	ft_write_status(char *str, unsigned int id, t_main_s *main)
 {
 	pthread_mutex_lock(&(main->mutex.print));
 	ft_putnbr(ft_get_timestamp(main));
 	write(1, " ", 1);
-	ft_putnbr(next);
+	ft_putnbr(id);
 	write(1, str, ft_strlen(str));
 	pthread_mutex_unlock(&(main->mutex.print));
+}
+
+void	ft_fuck_sleep(t_main_s *main, unsigned int time)
+{
+	unsigned int i;
+
+	i = ft_get_timestamp(main);
+	while (1)
+	{
+		if (ft_get_timestamp(main) - i > time)
+			break;
+		usleep(50);
+	}
 }

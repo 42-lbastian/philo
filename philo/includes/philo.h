@@ -6,7 +6,7 @@
 /*   By: lbastian <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/10 19:18:56 by lbastian          #+#    #+#             */
-/*   Updated: 2022/04/15 18:03:14 by lbastian         ###   ########.fr       */
+/*   Updated: 2022/04/19 19:02:31 by lbastian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,22 +60,32 @@ typedef struct s_main_s
 	t_thread		thread;
 	struct timeval	time_actual;
 	unsigned long	time_start;
-	struct timeval	*time_die;
+	unsigned long	*time_die;
 	t_mutex			mutex;
-//	t_list			*list;
 }				t_main_s;
 
-void			ft_putstr(char *str);
-void			ft_putstr_error(char *str);
+/*
+**				tools.c 
+*/
+void			ft_putstr_fd(char *str, int fd);
 int				ft_atoi(char *str);
-void			*ft_main_thread(void *main_s);
-void			*ft_philo_thread(void *main_s);
-int				ft_start_philo(void *main_s);
-int				ft_change_get_array(t_main_s *main_s, int index, int content, int fact);
+int				ft_change_get_array(t_main_s *main_s, int index,
+					int content, int fact);
 unsigned int	ft_get_timestamp(t_main_s *main_s);
 unsigned long	ft_get_mili(struct timeval time);
 unsigned int	ft_get_timedie(t_main_s *main_s, int id);
 void			ft_write_status(char *str, unsigned int next, t_main_s *main_s);
-void			ft_putnbr(unsigned int nb);
+void			ft_fuck_sleep(t_main_s *main_s, unsigned int time);
+
+/*
+**				thread.c
+*/
+void			*ft_main_thread(void *main_s);
+void			*ft_philo_thread(void *main_s);
+
+/*
+**				init.c
+*/
+int				ft_start_philo(void *main_s);
 
 #endif

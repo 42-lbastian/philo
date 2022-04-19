@@ -6,7 +6,7 @@
 /*   By: lbastian <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/10 19:08:05 by lbastian          #+#    #+#             */
-/*   Updated: 2022/03/29 16:28:19 by lbastian         ###   ########.fr       */
+/*   Updated: 2022/04/19 18:36:23 by lbastian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,17 +19,17 @@ int	ft_parse(char **argv, t_main_s *main_s)
 	main_s->info_p.time_eat = ft_atoi(argv[3]);
 	main_s->info_p.time_sleep = ft_atoi(argv[4]);
 	if (main_s->info_p.nb_philo < 0)
-		ft_putstr_error("Error Arg Number of Philo\n");
+		ft_putstr_fd("Error Arg Number of Philo\n", 2);
 	else if (main_s->info_p.nb_philo == 0)
 		return (0);
 	else if (main_s->info_p.time_die <= 0)
-		ft_putstr_error("Error Arg Time to Die\n");
+		ft_putstr_fd("Error Arg Time to Die\n", 2);
 	else if (main_s->info_p.time_eat <= 0)
-		ft_putstr_error("Error Arg Time to Eat\n");
+		ft_putstr_fd("Error Arg Time to Eat\n", 2);
 	else if (main_s->info_p.time_sleep <= 0)
-		ft_putstr_error("Error Arg Time to Sleep\n");
+		ft_putstr_fd("Error Arg Time to Sleep\n", 2);
 	else if (main_s->info_p.nb_to_eat == -1)
-		ft_putstr_error("Error Arg Number to Eat\n");
+		ft_putstr_fd("Error Arg Number to Eat\n", 2);
 	else
 		return (1);
 	return (0);
@@ -56,21 +56,21 @@ int	ft_start_thread(t_main_s *main_s)
 {
 	main_s->thread.tids = malloc(sizeof(pthread_t)
 			* (main_s->info_p.nb_philo + 1));
-	main_s->time_die = malloc(sizeof(struct timeval) * main_s->info_p.nb_philo);
+	main_s->time_die = malloc(sizeof(unsigned long) * main_s->info_p.nb_philo);
 	main_s->info_p.forks = malloc(sizeof(char) * main_s->info_p.nb_philo);
 	if (!main_s->thread.tids)
 	{
-		ft_putstr_error("Error Malloc tids\n");
+		ft_putstr_fd("Error Malloc tids\n", 2);
 		return (1);
 	}
 	if (!main_s->info_p.forks)
 	{
-		ft_putstr_error("Error Malloc forks\n");
+		ft_putstr_fd("Error Malloc forks\n", 2);
 		return (1);
 	}
 	if (!main_s->time_die)
 	{
-		ft_putstr_error("Error Malloc time die\n");
+		ft_putstr_fd("Error Malloc time die\n", 2);
 		return (1);
 	}
 	memset((void *)main_s->info_p.forks, 0, main_s->info_p.nb_philo);
@@ -89,7 +89,7 @@ int	main(int argc, char **argv)
 		main_s = malloc(sizeof(t_main_s));
 		if (!main_s)
 		{
-			ft_putstr_error("Error Malloc Main Struct\n");
+			ft_putstr_fd("Error Malloc Main Struct\n", 2);
 			return (1);
 		}
 		if (argc == 6)
@@ -102,7 +102,7 @@ int	main(int argc, char **argv)
 	}
 	else
 	{
-		ft_putstr_error("Error Argument\n");
+		ft_putstr_fd("Error Argument\n", 2);
 		return (1);
 	}
 	return (0);

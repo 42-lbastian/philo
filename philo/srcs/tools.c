@@ -6,7 +6,7 @@
 /*   By: lbastian <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/10 19:18:30 by lbastian          #+#    #+#             */
-/*   Updated: 2022/04/19 19:02:33 by lbastian         ###   ########.fr       */
+/*   Updated: 2022/04/20 14:16:44 by lbastian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,7 +122,7 @@ void	ft_write_status(char *str, unsigned int id, t_main_s *main)
 	pthread_mutex_unlock(&(main->mutex.print));
 }
 
-void	ft_fuck_sleep(t_main_s *main, unsigned int time)
+void	ft_wait(t_main_s *main, unsigned int time)
 {
 	unsigned int i;
 

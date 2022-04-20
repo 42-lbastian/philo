@@ -6,7 +6,7 @@
 /*   By: gsmets <gsmets@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/12 15:19:34 by gsmets            #+#    #+#             */
-/*   Updated: 2021/02/22 10:28:17 by gsmets           ###   ########.fr       */
+/*   Updated: 2022/04/20 16:41:59 by lbastian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ void	philo_eats(t_philosopher *philo)
 	t_rules *rules;
 
 	rules = philo->rules;
+//	action_print(rules, philo->id, "waiting");
 	pthread_mutex_lock(&(rules->forks[philo->left_fork_id]));
 	action_print(rules, philo->id, "has taken a fork");
 	pthread_mutex_lock(&(rules->forks[philo->right_fork_id]));
@@ -33,11 +34,9 @@ void	philo_eats(t_philosopher *philo)
 
 void	*p_thread(void *void_philosopher)
 {
-	int				i;
 	t_philosopher	*philo;
 	t_rules			*rules;
 
-	i = 0;
 	philo = (t_philosopher *)void_philosopher;
 	rules = philo->rules;
 	if (philo->id % 2)
@@ -50,7 +49,6 @@ void	*p_thread(void *void_philosopher)
 		action_print(rules, philo->id, "is sleeping");
 		smart_sleep(rules->time_sleep, rules);
 		action_print(rules, philo->id, "is thinking");
-		i++;
 	}
 	return (NULL);
 }

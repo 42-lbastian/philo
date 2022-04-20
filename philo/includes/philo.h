@@ -6,7 +6,7 @@
 /*   By: lbastian <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/10 19:18:56 by lbastian          #+#    #+#             */
-/*   Updated: 2022/04/19 19:02:31 by lbastian         ###   ########.fr       */
+/*   Updated: 2022/04/20 16:10:51 by lbastian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,17 +29,8 @@ typedef struct s_info_p
 	int				nb_to_eat;
 	int				id;
 	int				*forks;
+	int				die;
 }				t_info_p;
-
-/*
-typedef struct s_list
-{
-	int				content;
-	int				index;
-	struct s_list	*next;
-	struct s_list	*prev;
-}				t_list;
-*/
 
 typedef struct s_thread
 {
@@ -75,7 +66,7 @@ unsigned int	ft_get_timestamp(t_main_s *main_s);
 unsigned long	ft_get_mili(struct timeval time);
 unsigned int	ft_get_timedie(t_main_s *main_s, int id);
 void			ft_write_status(char *str, unsigned int next, t_main_s *main_s);
-void			ft_fuck_sleep(t_main_s *main_s, unsigned int time);
+void			ft_wait(t_main_s *main_s, unsigned int time);
 
 /*
 **				thread.c

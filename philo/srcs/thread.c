@@ -6,7 +6,7 @@
 /*   By: lbastian <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/11 14:24:00 by lbastian          #+#    #+#             */
-/*   Updated: 2022/04/20 17:26:25 by lbastian         ###   ########.fr       */
+/*   Updated: 2022/04/21 19:04:06 by lbastian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ int	ft_take_fork(int id, int prev, t_main_s *main)
 			//printf("\n\n%d-%d-%d DIE THINK\n\n", ft_get_timedie(main, id), ft_get_timestamp(main), id);
 			return (1);
 		}
-	
 	}
 	ft_change_get_array(main, prev, 1, 1);
 //	ft_write_status(" waiting\n", id, main);
@@ -59,9 +58,6 @@ int	ft_take_fork(int id, int prev, t_main_s *main)
 
 int		ft_sleep(int id, t_main_s	*main)
 {
-	int i;
-
-	i = 0;
 	ft_write_status(" is sleeping\n", id, main);
 //	printf("%d %d is sleeping\n", ft_get_timestamp(main), id);
 	if (main->info_p.time_sleep + main->info_p.time_eat < main->info_p.time_die)
@@ -128,9 +124,6 @@ void	*ft_philo_thread(void *main_s)
 
 void	*ft_main_thread(void *main_s)
 {
-	unsigned int i;
-
-	i = 0;
 //	gettimeofday(&(((t_main_s *)main_s)->time_start), NULL);
 	if (ft_start_philo(main_s))
 		return (NULL);

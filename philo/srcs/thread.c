@@ -6,7 +6,7 @@
 /*   By: lbastian <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/11 14:24:00 by lbastian          #+#    #+#             */
-/*   Updated: 2022/05/02 19:04:57 by lbastian         ###   ########.fr       */
+/*   Updated: 2022/05/02 20:27:20 by lbastian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,83 +14,56 @@
 
 int	ft_take_fork(int id, int prev, t_main *main)
 {
-	struct timeval time_die;
+	struct timeval	time_die;
 
-	while (ft_change_get_array(main, prev, 0, 0) == 1 || ft_change_get_array(main, id, 0, 0) == 1)
+	while (ft_change_get_array(main, prev, 0, 0) == 1
+		|| ft_change_get_array(main, id, 0, 0) == 1)
 	{
-		if ((ft_get_timedie(main, id))  > (unsigned int)main->info_p.time_die)
+		if ((ft_get_timedie(main, id)) > (unsigned int)main->info_p.time_die)
 		{
 			ft_write_status(" DIE THINK\n\n", id, main);
-			//printf("\n\n%d-%d-%d DIE THINK\n\n", ft_get_timedie(main, id), ft_get_timestamp(main), id);
 			return (1);
 		}
 		usleep(1000);
 	}
 	ft_change_get_array(main, prev, 1, 1);
-//	ft_write_status(" waiting\n", id, main);
 	ft_change_get_array(main, id, 1, 1);
 	pthread_mutex_lock(&(main->mutex.forks[id]));
-//	ft_change_get_array(main, id, 1, 1);
 	ft_write_status(" has taken a fork\n", id, main);
-//	printf("%u %d has taken a fork\n", ft_get_timestamp(main), id);
 	pthread_mutex_lock(&(main->mutex.forks[prev]));
-//	if (ft_get_timedie(main, id)  > (unsigned int)(main->info_p.time_die))
-//	{
-//		ft_write_status(" DIED THINK\n", id, main);
-//		return (1);
-//	}
 	ft_write_status(" has taken a fork\n", id, main);
-//	printf("%d %d has taken a fork\n", ft_get_timestamp(main), id);
 	ft_write_status(" is eating\n", id, main);
 	main->info_p.eat[id]--;
-//	printf("%d %d is eating\n", ft_get_timestamp(main), id);
-
 	gettimeofday(&(time_die), NULL);
 	main->time.time_die[id] = ft_get_mili(time_die);
 	ft_wait(main, main->info_p.time_eat - 1);
-//	usleep((main->info_p.time_eat) * 1000);
-
 	pthread_mutex_unlock(&(main->mutex.forks[prev]));
 	pthread_mutex_unlock(&(main->mutex.forks[id]));
 	ft_change_get_array(main, prev, 0, 1);
 	ft_change_get_array(main, id, 0, 1);
-
 	return (0);
 }
 
-int		ft_sleep(int id, t_main	*main)
+int	ft_sleep(int id, t_main	*main)
 {
 	ft_write_status(" is sleeping\n", id, main);
-//	printf("%d %d is sleeping\n", ft_get_timestamp(main), id);
 	if (main->info_p.time_sleep + main->info_p.time_eat < main->info_p.time_die)
 		usleep(main->info_p.time_sleep * 1000);
 	else
 	{
 		ft_wait(main, main->info_p.time_die - main->info_p.time_eat);
-		//usleep((main->info_p.time_die - main->info_p.time_eat) * 1000);
-
 		ft_write_status(" DIE SLEEP\n", id, main);
-	//	printf("\n\n%d-%d-%d DIE SLEEP\n\n", ft_get_timedie(main, id), ft_get_timestamp(main), id);
 		return (1);
 	}
-//	while (i < main->info_p.time_sleep /* || signal  */)
-//	{
-//		if (ft_get_timedie(main, id) > (unsigned int)main->info_p.time_die)
-//		{
-//			printf("\n\n%d-%d-%d DIE SLEEP\n\n", ft_get_timedie(main, id), ft_get_timestamp(main), id);
-//			return (1);
-//		}
-//		usleep(1000);
-//		i++;
-//	}
 	ft_write_status(" is thinking\n", id, main);
-	//printf("%d %d is thinking\n", ft_get_timestamp(main), id);
 	return (0);
 }
 
 void	*ft_philo_action(int id, int prev, void *main_s)
 {
-	t_main	*main = ((t_main *)main_s);
+	t_main	*main;
+
+	main = ((t_main *)main_s);
 	while (1)
 	{
 		if (ft_take_fork(id, prev, main))
@@ -104,9 +77,9 @@ void	*ft_philo_action(int id, int prev, void *main_s)
 
 void	*ft_philo_thread(void *main)
 {
-	int	id;
-	int	prev;
-	struct timeval time_die;
+	int				id;
+	int				prev;
+	struct timeval	time_die;
 
 	pthread_mutex_lock(&(((t_main *)main)->mutex.id));
 	id = ((t_main *)main)->info_p.id;
@@ -118,10 +91,9 @@ void	*ft_philo_thread(void *main)
 	pthread_mutex_unlock(&(((t_main *)main)->mutex.id));
 	gettimeofday(&(time_die), NULL);
 	if (id % 2)
-		usleep((((t_main *)main)->info_p.time_eat  / 2) * 1000);
+		usleep((((t_main *)main)->info_p.time_eat / 2) *1000);
 //		usleep((((t_main *)main)->info_p.time_eat  / ((t_main
 //	*)main)->info_p.nb_philo));
-//		usleep(((t_main *)main)->info_p.time_eat * 1000); //change
 	((t_main *)main)->time.time_die[id] = ft_get_mili(time_die);
 	ft_philo_action(id, prev, main);
 	return (NULL);
@@ -129,10 +101,9 @@ void	*ft_philo_thread(void *main)
 
 void	*ft_main_thread(void *main)
 {
-	int count_join;
+	int	count_join;
 
 	count_join = 0;
-//	gettimeofday(&(((t_main *)main)->time_start), NULL);
 	if (ft_start_philo(main))
 		return (NULL);
 	while (count_join < ((t_main *)main)->info_p.nb_philo)
@@ -140,10 +111,5 @@ void	*ft_main_thread(void *main)
 		pthread_join(((t_main *)main)->thread.tids[count_join], NULL);
 		count_join++;
 	}
-//	while (1 && ((t_main *)main)->info_p.nb_to_eat != 0)
-//	{
-//		//if (ft_get_timestamp(main) > 500)
-//
-//	}
 	return (NULL);
 }

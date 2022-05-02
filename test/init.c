@@ -1,6 +1,8 @@
 #include <pthread.h>
 #include <stdio.h>
-#include <libc.h>
+#include <unistd.h>
+#include <stdlib.h>
+
 
 typedef struct	s_list
 {
@@ -69,17 +71,37 @@ void	*ft_one_two(void *list)
 	return (NULL);
 }
 
+void	*ft_infinite(void *list)
+{
+	int i;
+
+	i = 0;
+	while (1)
+	{
+		printf("NB %d\n", i);
+		i++;
+		sleep(2);
+	}
+}
+
+void	*ft_infinite2(void *list)
+{
+	sleep(5);
+	printf("ENNNND\n");
+	return (NULL);
+}
+
 void *main_thread(void *list)
 {
 	int th;
 	
 	((t_list *)list)->id = 0;
-	th = pthread_create(&(((t_list *)list)->tid_sec[0]), NULL,  ft_one_two, list);
-	th = pthread_create(&(((t_list *)list)->tid_sec[1]), NULL, ft_one_two, list);
-	th = pthread_create(&(((t_list *)list)->tid_sec[2]), NULL, ft_one_two, list);
-	pthread_join(((t_list *)list)->tid_sec[0], NULL);
-	pthread_join(((t_list *)list)->tid_sec[1], NULL);
+	th = pthread_create(&(((t_list *)list)->tid_sec[0]), NULL, ft_infinite, list);
+	th = pthread_create(&(((t_list *)list)->tid_sec[1]), NULL, ft_infinite, list);
+	th = pthread_create(&(((t_list *)list)->tid_sec[2]), NULL, ft_infinite2, list);
 	pthread_join(((t_list *)list)->tid_sec[2], NULL);
+	pthread_detach(((t_list *)list)->tid_sec[1]);
+	pthread_join(((t_list *)list)->tid_sec[1], NULL);
 	return (NULL);
 }
 

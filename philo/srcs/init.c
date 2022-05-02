@@ -6,52 +6,56 @@
 /*   By: lbastian <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/21 17:23:53 by lbastian          #+#    #+#             */
-/*   Updated: 2022/04/19 18:36:10 by lbastian         ###   ########.fr       */
+/*   Updated: 2022/05/02 18:10:08 by lbastian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo.h"
 
-int	ft_start_mutex(void	*main_s)
+int	ft_start_mutex(void	*main)
 {
 	int	i;
 
 	i = 0;
-	((t_main_s *)main_s)->mutex.forks = malloc(sizeof(pthread_mutex_t)
-			* ((t_main_s *)main_s)->info_p.nb_philo);
-	((t_main_s *)main_s)->mutex.array = malloc(sizeof(pthread_mutex_t)
-			* ((t_main_s *)main_s)->info_p.nb_philo);
-	if (!((t_main_s *)main_s)->mutex.forks || !((t_main_s *)main_s)->mutex.array)
+	((t_main *)main)->mutex.forks = malloc(sizeof(pthread_mutex_t)
+			* ((t_main *)main)->info_p.nb_philo);
+	((t_main *)main)->mutex.array = malloc(sizeof(pthread_mutex_t)
+			* ((t_main *)main)->info_p.nb_philo);
+	((t_main *)main)->info_p.eat = malloc(sizeof(int)
+			* ((t_main *)main)->info_p.nb_philo);
+	if (!((t_main *)main)->mutex.forks
+		|| !((t_main *)main)->mutex.array || !((t_main *)main)->info_p.eat)
 	{
-		ft_putstr_fd("Error Malloc mutex forks/array\n", 2);
+		ft_putstr_fd("Error Malloc Mutex || Eat\n", 2);
 		return (1);
 	}
-	while (i < ((t_main_s *)main_s)->info_p.nb_philo)
+	while (i < ((t_main *)main)->info_p.nb_philo)
 	{
-		pthread_mutex_init(&(((t_main_s *)main_s)->mutex.array[i]), NULL);
-		pthread_mutex_init(&(((t_main_s *)main_s)->mutex.forks[i]), NULL);
+		pthread_mutex_init(&(((t_main *)main)->mutex.array[i]), NULL);
+		pthread_mutex_init(&(((t_main *)main)->mutex.forks[i]), NULL);
+		((t_main *)main)->info_p.eat[i] = ((t_main *)main)->info_p.nb_to_eat;
 		i++;
 	}
-	pthread_mutex_init(&(((t_main_s *)main_s)->mutex.id), NULL);
-	pthread_mutex_init(&(((t_main_s *)main_s)->mutex.print), NULL);
+	pthread_mutex_init(&(((t_main *)main)->mutex.id), NULL);
+	pthread_mutex_init(&(((t_main *)main)->mutex.print), NULL);
 	return (0);
 }
 
-int	ft_start_philo(void *main_s)
+int	ft_start_philo(void *main)
 {
-	int	i;
-	struct timeval time_start;
+	int				i;
+	struct timeval	s_time_start;
 
 	i = 0;
-	((t_main_s *)main_s)->info_p.id = 0;
-	if (ft_start_mutex(main_s))
+	((t_main *)main)->info_p.id = 0;
+	if (ft_start_mutex(main))
 		return (1);
-	gettimeofday(&(time_start), NULL);
-	((t_main_s *)main_s)->time_start = ft_get_mili(time_start);
-	while (i < ((t_main_s *)main_s)->info_p.nb_philo)
+	gettimeofday(&(s_time_start), NULL);
+	((t_main *)main)->time.time_start = ft_get_mili(s_time_start);
+	while (i < ((t_main *)main)->info_p.nb_philo)
 	{
-		pthread_create(&(((t_main_s *)main_s)->thread.tids
-			[i + 1]), NULL, ft_philo_thread, main_s);
+		pthread_create(&(((t_main *)main)->thread.tids
+			[i + 1]), NULL, ft_philo_thread, main);
 		i++;
 	}
 	return (0);

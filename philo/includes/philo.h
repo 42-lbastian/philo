@@ -6,7 +6,7 @@
 /*   By: lbastian <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/10 19:18:56 by lbastian          #+#    #+#             */
-/*   Updated: 2022/04/20 16:10:51 by lbastian         ###   ########.fr       */
+/*   Updated: 2022/05/02 17:43:36 by lbastian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ typedef struct s_info_p
 	int				id;
 	int				*forks;
 	int				die;
+	int				*eat;
 }				t_info_p;
 
 typedef struct s_thread
@@ -45,28 +46,42 @@ typedef struct s_mutex
 	pthread_mutex_t	print;
 }				t_mutex;
 
-typedef struct s_main_s
+typedef struct	s_time
 {
-	t_info_p		info_p;
-	t_thread		thread;
-	struct timeval	time_actual;
+	struct timeval	s_time_actual;
 	unsigned long	time_start;
 	unsigned long	*time_die;
-	t_mutex			mutex;
-}				t_main_s;
+}				t_time;
+
+typedef struct s_main
+{
+	t_info_p	info_p;
+	t_thread	thread;
+	t_mutex		mutex;
+	t_time		time;
+}				t_main;
 
 /*
 **				tools.c 
 */
-void			ft_putstr_fd(char *str, int fd);
-int				ft_atoi(char *str);
-int				ft_change_get_array(t_main_s *main_s, int index,
+int				ft_strlen(char *str);
+int				ft_change_get_array(t_main *t_main, int index,
 					int content, int fact);
-unsigned int	ft_get_timestamp(t_main_s *main_s);
+void			ft_wait(t_main *main_s, unsigned int time);
+
+/*
+**				tools_mili.c 
+*/
+unsigned int	ft_get_timestamp(t_main *main_s);
 unsigned long	ft_get_mili(struct timeval time);
-unsigned int	ft_get_timedie(t_main_s *main_s, int id);
-void			ft_write_status(char *str, unsigned int next, t_main_s *main_s);
-void			ft_wait(t_main_s *main_s, unsigned int time);
+unsigned int	ft_get_timedie(t_main *main_s, int id);
+
+/*
+**				tools_print.c 
+*/
+int				ft_atoi(char *str);
+void			ft_write_status(char *str, unsigned int next, t_main *main_s);
+void			ft_putstr_fd(char *str, int fd);
 
 /*
 **				thread.c

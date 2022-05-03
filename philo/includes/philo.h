@@ -6,7 +6,7 @@
 /*   By: lbastian <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/10 19:18:56 by lbastian          #+#    #+#             */
-/*   Updated: 2022/05/03 18:58:44 by lbastian         ###   ########.fr       */
+/*   Updated: 2022/05/03 19:08:26 by lbastian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,10 +87,10 @@ int				ft_wait(t_main *main_s, unsigned int time, int id);
 **				tools_print.c 
 */
 int				ft_atoi(char *str);
-void			ft_write_status(char *str, unsigned int id,
+int				ft_write_status(char *str, unsigned int id,
 					t_main *main_s, int fact);
-void			ft_write_status_solo(char *str, int time);
-void			ft_putstr_fd(char *str, int fd);
+int				ft_write_status_solo(char *str, int time);
+int				ft_putstr_fd(char *str, int fd);
 
 /*
 **				thread.c

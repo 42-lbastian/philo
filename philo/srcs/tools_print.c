@@ -6,27 +6,29 @@
 /*   By: lbastian <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/02 16:43:29 by lbastian          #+#    #+#             */
-/*   Updated: 2022/05/03 18:58:42 by lbastian         ###   ########.fr       */
+/*   Updated: 2022/05/03 19:09:04 by lbastian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo.h"
 
-void	ft_putstr_fd(char *str, int fd)
+int	ft_putstr_fd(char *str, int fd)
 {
 	int	ret_write;
 
 	ret_write = write(fd, str, ft_strlen(str));
+	return (ret_write);
 }
 
-void	ft_putchar(char c)
+int	ft_putchar(char c)
 {
 	int	ret_write;
 
 	ret_write = write(1, &c, 1);
+	return (ret_write);
 }
 
-void	ft_putnbr(unsigned int nb)
+int	ft_putnbr(unsigned int nb)
 {
 	unsigned long	size;
 	char			str[11];
@@ -51,12 +53,14 @@ void	ft_putnbr(unsigned int nb)
 		str[i] = '\0';
 		ret_write = write(1, str, ft_strlen(str));
 	}
+	return (ret_write);
 }
 
-void	ft_write_status(char *str, unsigned int id, t_main *main, int fact)
+int	ft_write_status(char *str, unsigned int id, t_main *main, int fact)
 {
 	int	ret_write;
 
+	ret_write = 1;
 	pthread_mutex_lock(&(main->mutex.print));
 	if (main->info_p.dont_print == 0)
 	{
@@ -68,9 +72,10 @@ void	ft_write_status(char *str, unsigned int id, t_main *main, int fact)
 			main->info_p.dont_print = 1;
 	}
 	pthread_mutex_unlock(&(main->mutex.print));
+	return (ret_write);
 }
 
-void	ft_write_status_solo(char *str, int time)
+int	ft_write_status_solo(char *str, int time)
 {
 	int	ret_write;
 
@@ -78,4 +83,5 @@ void	ft_write_status_solo(char *str, int time)
 	ret_write = write(1, " ", 1);
 	ft_putnbr(0);
 	ret_write = write(1, str, ft_strlen(str));
+	return (ret_write);
 }

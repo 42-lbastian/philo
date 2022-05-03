@@ -6,7 +6,7 @@
 /*   By: lbastian <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/10 19:08:05 by lbastian          #+#    #+#             */
-/*   Updated: 2022/05/03 18:05:34 by lbastian         ###   ########.fr       */
+/*   Updated: 2022/05/03 18:40:56 by lbastian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ int	ft_parse(char **argv, t_main *main)
 	main->info_p.time_die = ft_atoi(argv[2]);
 	main->info_p.time_eat = ft_atoi(argv[3]);
 	main->info_p.time_sleep = ft_atoi(argv[4]);
+	main->info_p.dont_print = 0;
 	if (main->info_p.nb_philo < 0)
 		ft_putstr_fd("Error Arg Number of Philo\n", 2);
 	else if (main->info_p.nb_philo == 0)

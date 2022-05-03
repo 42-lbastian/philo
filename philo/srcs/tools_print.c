@@ -6,7 +6,7 @@
 /*   By: lbastian <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/02 16:43:29 by lbastian          #+#    #+#             */
-/*   Updated: 2022/05/03 17:59:32 by lbastian         ###   ########.fr       */
+/*   Updated: 2022/05/03 18:43:55 by lbastian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,15 +53,20 @@ void	ft_putnbr(unsigned int nb)
 	}
 }
 
-void	ft_write_status(char *str, unsigned int id, t_main *main)
+void	ft_write_status(char *str, unsigned int id, t_main *main, int fact)
 {
 	int	ret_write;
 
 	pthread_mutex_lock(&(main->mutex.print));
-	ft_putnbr(ft_get_timestamp(main));
-	ret_write = write(1, " ", 1);
-	ft_putnbr(id);
-	ret_write = write(1, str, ft_strlen(str));
+	if (main->info_p.dont_print == 0)
+	{
+		ft_putnbr(ft_get_timestamp(main));
+		ret_write = write(1, " ", 1);
+		ft_putnbr(id);
+		ret_write = write(1, str, ft_strlen(str));
+		if (fact == DEATH)
+			main->info_p.dont_print = 1;
+	}
 	pthread_mutex_unlock(&(main->mutex.print));
 }
 

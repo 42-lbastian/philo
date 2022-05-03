@@ -6,7 +6,7 @@
 /*   By: lbastian <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/10 19:18:56 by lbastian          #+#    #+#             */
-/*   Updated: 2022/05/03 17:59:29 by lbastian         ###   ########.fr       */
+/*   Updated: 2022/05/03 18:43:53 by lbastian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@
 # include <pthread.h>
 # include <string.h>
 # include <sys/time.h>
+# define DEATH 1
+# define PRINT 0
 
 typedef struct s_info_p
 {
@@ -32,6 +34,7 @@ typedef struct s_info_p
 	int				die;
 	int				*eat;
 	int				*death;
+	int				dont_print;
 }				t_info_p;
 
 typedef struct s_thread
@@ -84,7 +87,7 @@ int				ft_wait(t_main *main_s, unsigned int time, int id);
 **				tools_print.c 
 */
 int				ft_atoi(char *str);
-void			ft_write_status(char *str, unsigned int id, t_main *main_s);
+void			ft_write_status(char *str, unsigned int id, t_main *main_s, int fact);
 void			ft_write_status_solo(char *str, int time);
 void			ft_putstr_fd(char *str, int fd);
 
@@ -93,6 +96,12 @@ void			ft_putstr_fd(char *str, int fd);
 */
 void			*ft_main_thread(void *main_s);
 void			*ft_philo_thread(void *main_s);
+
+/*
+**				philo_actions.c
+*/
+void			*ft_philo_action(int id, int prev, void *main_s);
+
 
 /*
 **				init.c

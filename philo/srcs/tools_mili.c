@@ -6,7 +6,7 @@
 /*   By: lbastian <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/02 16:43:50 by lbastian          #+#    #+#             */
-/*   Updated: 2022/05/02 18:51:01 by lbastian         ###   ########.fr       */
+/*   Updated: 2022/05/03 16:04:43 by lbastian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,26 +19,27 @@ unsigned long	ft_get_mili(struct timeval time)
 
 unsigned int	ft_get_timestamp(t_main *main)
 {
-	gettimeofday(&(main->time.s_time_actual), NULL);
-	return ((unsigned int)(ft_get_mili(main->time.s_time_actual)
-		- main->time.time_start));
+	gettimeofday(&(main->time.s_actual), NULL);
+	return ((unsigned int)(ft_get_mili(main->time.s_actual)
+		- main->time.start));
 }
 
 unsigned int	ft_get_timedie(t_main *main, int id)
 {
-	gettimeofday(&(main->time.s_time_actual), NULL);
-	return (ft_get_mili(main->time.s_time_actual) - main->time.time_die[id]);
+	gettimeofday(&(main->time.s_actual), NULL);
+	return (ft_get_mili(main->time.s_actual) - main->time.die[id]);
 }
 
-void	ft_wait(t_main *main, unsigned int time)
+int	ft_wait(t_main *main, unsigned int time, int id)
 {
 	unsigned int	i;
 
 	i = ft_get_timestamp(main);
-	while (1)
+	while (ft_get_death(main, id) == 0)
 	{
 		if (ft_get_timestamp(main) - i > time)
-			break ;
-		usleep(50);
+			return (0);
+		usleep(500);
 	}
+	return (1);
 }

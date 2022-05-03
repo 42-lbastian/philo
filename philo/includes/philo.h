@@ -6,7 +6,7 @@
 /*   By: lbastian <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/10 19:18:56 by lbastian          #+#    #+#             */
-/*   Updated: 2022/05/02 17:43:36 by lbastian         ###   ########.fr       */
+/*   Updated: 2022/05/03 17:59:29 by lbastian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ typedef struct s_info_p
 	int				*forks;
 	int				die;
 	int				*eat;
+	int				*death;
 }				t_info_p;
 
 typedef struct s_thread
@@ -43,14 +44,15 @@ typedef struct s_mutex
 	pthread_mutex_t	id;
 	pthread_mutex_t	*forks;
 	pthread_mutex_t	*array;
+	pthread_mutex_t	*death;
 	pthread_mutex_t	print;
 }				t_mutex;
 
 typedef struct	s_time
 {
-	struct timeval	s_time_actual;
-	unsigned long	time_start;
-	unsigned long	*time_die;
+	struct timeval	s_actual;
+	unsigned long	start;
+	unsigned long	*die;
 }				t_time;
 
 typedef struct s_main
@@ -67,7 +69,8 @@ typedef struct s_main
 int				ft_strlen(char *str);
 int				ft_change_get_array(t_main *t_main, int index,
 					int content, int fact);
-void			ft_wait(t_main *main_s, unsigned int time);
+int				ft_get_death(t_main *main, int id);
+void			ft_change_death(t_main *main);
 
 /*
 **				tools_mili.c 
@@ -75,12 +78,14 @@ void			ft_wait(t_main *main_s, unsigned int time);
 unsigned int	ft_get_timestamp(t_main *main_s);
 unsigned long	ft_get_mili(struct timeval time);
 unsigned int	ft_get_timedie(t_main *main_s, int id);
+int				ft_wait(t_main *main_s, unsigned int time, int id);
 
 /*
 **				tools_print.c 
 */
 int				ft_atoi(char *str);
-void			ft_write_status(char *str, unsigned int next, t_main *main_s);
+void			ft_write_status(char *str, unsigned int id, t_main *main_s);
+void			ft_write_status_solo(char *str, int time);
 void			ft_putstr_fd(char *str, int fd);
 
 /*
@@ -93,5 +98,10 @@ void			*ft_philo_thread(void *main_s);
 **				init.c
 */
 int				ft_start_philo(void *main_s);
+
+/**
+**				free.c
+*/
+void			ft_free_all(t_main *main);
 
 #endif

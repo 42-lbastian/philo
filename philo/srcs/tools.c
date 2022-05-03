@@ -6,7 +6,7 @@
 /*   By: lbastian <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/10 19:18:30 by lbastian          #+#    #+#             */
-/*   Updated: 2022/05/02 20:14:41 by lbastian         ###   ########.fr       */
+/*   Updated: 2022/05/03 16:10:00 by lbastian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,4 +57,28 @@ int	ft_change_get_array(t_main *main, int index, int content, int fact)
 		main->info_p.forks[index] = content;
 	pthread_mutex_unlock(&(main->mutex.array[index]));
 	return (ret);
+}
+
+int	ft_get_death(t_main *main, int id)
+{
+	int	ret;
+
+	pthread_mutex_lock(&(main->mutex.death[id]));
+	ret = main->info_p.death[id];
+	pthread_mutex_unlock(&(main->mutex.death[id]));
+	return (ret);
+}
+
+void	ft_change_death(t_main *main)
+{
+	int	i;
+
+	i = 0;
+	while (i < main->info_p.nb_philo)
+	{
+		pthread_mutex_lock(&(main->mutex.death[i]));
+		main->info_p.death[i] = 1;
+		pthread_mutex_unlock(&(main->mutex.death[i]));
+		i++;
+	}
 }

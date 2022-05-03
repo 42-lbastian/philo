@@ -6,7 +6,7 @@
 /*   By: lbastian <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/03 18:06:36 by lbastian          #+#    #+#             */
-/*   Updated: 2022/05/03 18:50:43 by lbastian         ###   ########.fr       */
+/*   Updated: 2022/05/03 18:58:37 by lbastian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,13 +21,6 @@ int	ft_end_forks(t_main *main, int prev, int id)
 
 int	ft_wait_forks(int id, int prev, t_main *main)
 {
-
-}
-
-int	ft_take_fork(int id, int prev, t_main *main)
-{
-	struct timeval	time_die;
-
 	while (ft_change_get_array(main, prev, 0, 0) == 1
 		|| ft_change_get_array(main, id, 0, 0) == 1)
 	{
@@ -40,6 +33,15 @@ int	ft_take_fork(int id, int prev, t_main *main)
 		if (ft_wait(main, 1, id))
 			return (1);
 	}
+	return (0);
+}
+
+int	ft_take_fork(int id, int prev, t_main *main)
+{
+	struct timeval	time_die;
+
+	if (ft_wait_forks(id, prev, main))
+		return (1);
 	ft_change_get_array(main, prev, 1, 1);
 	ft_change_get_array(main, id, 1, 1);
 	pthread_mutex_lock(&(main->mutex.forks[id]));

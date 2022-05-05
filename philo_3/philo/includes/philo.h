@@ -6,7 +6,7 @@
 /*   By: lbastian <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/10 19:18:56 by lbastian          #+#    #+#             */
-/*   Updated: 2022/05/05 22:01:17 by lbastian         ###   ########.fr       */
+/*   Updated: 2022/05/05 22:04:42 by lbastian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,8 @@
 # define PRINT 0
 # define INIT 1
 # define NORMAL 0
-# define READ 0
 # define CHANGE 1
+# define READ 0
 
 typedef struct s_info_p
 {

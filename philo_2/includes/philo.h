@@ -6,7 +6,7 @@
 /*   By: lbastian <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/10 19:18:56 by lbastian          #+#    #+#             */
-/*   Updated: 2022/05/04 17:04:28 by lbastian         ###   ########.fr       */
+/*   Updated: 2022/05/05 16:14:44 by lbastian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@
 # include <sys/time.h>
 # define DEATH 1
 # define PRINT 0
+# define INIT 1
+# define NORMAL 0
 
 typedef struct s_info_p
 {
@@ -108,6 +110,13 @@ int				ft_end_forks(t_main *main, int prev, int id);
 **				philo_actions_init.c
 */
 int				ft_take_fork_init(int id, int prev, t_main *main);
+int				ft_take_fork_init_odd(int id, int prev, t_main *main);
+
+/*
+**				forks.c
+*/
+void			ft_lock_forks(int id, int prev, t_main *main);
+void			ft_unlock_forks(int id, int prev, t_main *main);
 
 /*
 **				init.c

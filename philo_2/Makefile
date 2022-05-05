@@ -4,6 +4,7 @@ SRCS =	srcs/free.c \
 		srcs/init.c \
 		srcs/philo_actions.c \
 		srcs/philo_actions_init.c \
+		srcs/forks.c \
 		srcs/philo.c \
 		srcs/thread.c \
 		srcs/tools.c \

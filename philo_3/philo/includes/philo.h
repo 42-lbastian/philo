@@ -6,7 +6,7 @@
 /*   By: lbastian <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/10 19:18:56 by lbastian          #+#    #+#             */
-/*   Updated: 2022/05/05 21:17:56 by lbastian         ###   ########.fr       */
+/*   Updated: 2022/05/05 21:39:28 by lbastian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ typedef struct s_info_p
 	int				nb_to_eat;
 	int				id;
 	int				*forks;
-	int				die;
 	int				*eat;
 	int				*death;
 	int				dont_print;

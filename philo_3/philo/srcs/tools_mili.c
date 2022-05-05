@@ -6,7 +6,7 @@
 /*   By: lbastian <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/02 16:43:50 by lbastian          #+#    #+#             */
-/*   Updated: 2022/05/05 21:40:44 by lbastian         ###   ########.fr       */
+/*   Updated: 2022/05/05 21:52:42 by lbastian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int	ft_wait(t_main *main, unsigned int time, int id)
 	{
 		if (ft_get_timestamp(main) - i > time)
 			return (0);
-		usleep(1000);
+		usleep(500);
 	}
 	return (1);
 }

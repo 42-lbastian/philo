@@ -6,7 +6,7 @@
 /*   By: lbastian <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/21 17:23:53 by lbastian          #+#    #+#             */
-/*   Updated: 2022/05/05 20:31:44 by lbastian         ###   ########.fr       */
+/*   Updated: 2022/05/05 22:01:06 by lbastian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ int	ft_start_mutex(void	*main)
 			* ((t_main *)main)->info_p.nb_philo);
 	if (!((t_main *)main)->mutex.forks
 		|| !((t_main *)main)->mutex.array || !((t_main *)main)->mutex.death)
-
 	{
 		ft_putstr_fd("Error Malloc Mutex\n", 2);
 		return (1);

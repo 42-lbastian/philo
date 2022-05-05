@@ -6,7 +6,7 @@
 /*   By: lbastian <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 17:00:24 by lbastian          #+#    #+#             */
-/*   Updated: 2022/05/05 17:15:49 by lbastian         ###   ########.fr       */
+/*   Updated: 2022/05/05 21:59:57 by lbastian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 int	ft_wait_forks_init(int id, int prev, t_main *main)
 {
-	while (ft_change_get_array(main, prev, 0, 0) == 1
-		|| ft_change_get_array(main, id, 0, 0) == 1)
+	while (ft_change_get_array(main, prev, 0, READ) == 1
+		|| ft_change_get_array(main, id, 0, READ) == 1)
 	{
 		if ((ft_get_timedie(main, id)) > (unsigned int)main->info_p.time_die)
 		{
@@ -35,8 +35,8 @@ int	ft_take_fork_init(int id, int prev, t_main *main)
 
 	if (ft_wait_forks_init(id, prev, main))
 		return (1);
-	ft_change_get_array(main, prev, 1, 1);
-	ft_change_get_array(main, id, 1, 1);
+	ft_change_get_array(main, prev, 1, CHANGE);
+	ft_change_get_array(main, id, 1, CHANGE);
 	ft_lock_forks(id, prev, main);
 	if (ft_get_death(main, id) == 1)
 		return (ft_end_forks(main, prev, id));
@@ -49,7 +49,7 @@ int	ft_take_fork_init(int id, int prev, t_main *main)
 	if (ft_wait(main, main->info_p.time_eat - 1, id))
 		return (ft_end_forks(main, prev, id));
 	ft_unlock_forks(id, prev, main);
-	ft_change_get_array(main, prev, 0, 1);
-	ft_change_get_array(main, id, 0, 1);
+	ft_change_get_array(main, prev, 0, CHANGE);
+	ft_change_get_array(main, id, 0, CHANGE);
 	return (0);
 }

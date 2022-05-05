@@ -6,7 +6,7 @@
 /*   By: lbastian <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/02 16:43:50 by lbastian          #+#    #+#             */
-/*   Updated: 2022/05/05 21:52:42 by lbastian         ###   ########.fr       */
+/*   Updated: 2022/05/05 22:00:44 by lbastian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ unsigned long	ft_get_mili(struct timeval time)
 
 unsigned int	ft_get_timestamp(t_main *main)
 {
-	struct timeval actual;
+	struct timeval	actual;
 
 	gettimeofday(&(actual), NULL);
 	return ((unsigned int)(ft_get_mili(actual)
@@ -28,7 +28,7 @@ unsigned int	ft_get_timestamp(t_main *main)
 
 unsigned int	ft_get_timedie(t_main *main, int id)
 {
-	struct timeval actual;
+	struct timeval	actual;
 
 	gettimeofday(&(actual), NULL);
 	return (ft_get_mili(actual) - main->time.die[id]);

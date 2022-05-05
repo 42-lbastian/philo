@@ -6,7 +6,7 @@
 /*   By: lbastian <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/10 19:18:56 by lbastian          #+#    #+#             */
-/*   Updated: 2022/05/05 16:14:44 by lbastian         ###   ########.fr       */
+/*   Updated: 2022/05/05 21:17:56 by lbastian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,6 @@ typedef struct s_mutex
 
 typedef struct s_time
 {
-	struct timeval	s_actual;
 	unsigned long	start;
 	unsigned long	*die;
 }				t_time;

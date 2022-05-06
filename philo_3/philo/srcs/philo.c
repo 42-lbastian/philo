@@ -6,7 +6,7 @@
 /*   By: lbastian <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/10 19:08:05 by lbastian          #+#    #+#             */
-/*   Updated: 2022/05/05 20:16:12 by lbastian         ###   ########.fr       */
+/*   Updated: 2022/05/06 12:51:55 by lbastian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,11 @@ int	ft_parse(char **argv, t_main *main, int argc)
 		ft_putstr_fd("Error Arg Number of Philo\n", 2);
 	else if (main->info_p.nb_philo == 0)
 		return (0);
-	else if (main->info_p.time_die <= 0 || main->info_p.time_die < 60)
+	else if (main->info_p.time_die < 60)
 		ft_putstr_fd("Error Arg Time to Die\n", 2);
-	else if (main->info_p.time_eat <= 0 || main->info_p.time_eat < 60)
+	else if (main->info_p.time_eat < 60)
 		ft_putstr_fd("Error Arg Time to Eat\n", 2);
-	else if (main->info_p.time_sleep <= 0 || main->info_p.time_sleep < 60)
+	else if (main->info_p.time_sleep < 60)
 		ft_putstr_fd("Error Arg Time to Sleep\n", 2);
 	else if (argc == 6 && main->info_p.nb_to_eat < 0)
 		ft_putstr_fd("Error Arg Number to Eat\n", 2);

@@ -6,7 +6,7 @@
 /*   By: lbastian <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/03 18:06:36 by lbastian          #+#    #+#             */
-/*   Updated: 2022/05/06 13:27:44 by lbastian         ###   ########.fr       */
+/*   Updated: 2022/05/06 16:34:31 by lbastian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,6 @@ int	ft_sleep(int id, t_main	*main)
 		ft_wait(main, main->info_p.time_sleep - 1, id);
 	else
 	{
-		ft_write_status(" here\n", id, main, PRINT);
 		if (ft_wait(main, main->info_p.time_die
 				- main->info_p.time_eat, id))
 			return (1);

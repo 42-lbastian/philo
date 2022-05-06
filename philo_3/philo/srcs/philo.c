@@ -6,7 +6,7 @@
 /*   By: lbastian <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/10 19:08:05 by lbastian          #+#    #+#             */
-/*   Updated: 2022/05/06 12:51:55 by lbastian         ###   ########.fr       */
+/*   Updated: 2022/05/06 18:12:52 by lbastian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ int	ft_one_philo(t_main *main)
 	usleep(main->info_p.time_die * 1000);
 	ft_write_status_solo(" die\n", main->info_p.time_die);
 	free(main);
-	return (0);
+	return (1);
 }
 
 int	ft_ret_free(t_main *main)

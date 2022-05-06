@@ -6,7 +6,7 @@
 /*   By: lbastian <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/10 19:18:30 by lbastian          #+#    #+#             */
-/*   Updated: 2022/05/05 21:58:16 by lbastian         ###   ########.fr       */
+/*   Updated: 2022/05/06 17:19:24 by lbastian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	ft_atoi(char *str)
 	index = 0;
 	neg = 1;
 	res = 0;
-	if (ft_strlen(str) == 0)
+	if (ft_strlen(str) == 0 || (ft_strlen(str) == 1 && str[0] == '-'))
 		return (-1);
 	if (str[0] == '-')
 	{

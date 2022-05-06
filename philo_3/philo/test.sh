@@ -15,52 +15,88 @@ else
 	then
 		make re
 		clear
+		printf "${red}Error Arg${normal}\n"
+		printf "${blue}<\n${normal}"
+		./philo 2
+		printf "${blue}>\n${normal}"
+		./philo 2 100 100 100 2 13
+		printf "${blue}valgrind <\n${normal}"
+		valgrind --track-origins=yes --leak-check=full --show-leak-kinds=all ./philo 2
+		printf "${blue}valgrind >${normal}\n"
+		valgrind --track-origins=yes --leak-check=full --show-leak-kinds=all ./philo 2 100 100 100 2 13
+		printf "\n"
+
 		printf "${red}0 nb philo || 0 nb to eat${normal}\n"
 		printf "|"
 		./philo 0 100 100 100
 		printf "|\n|"
 		./philo 2 100 100 100 0
-		printf "|\n\n"
+		printf "|\n${blue}valgrind 0 nb Philo\n${normal}"
+		valgrind --track-origins=yes --leak-check=full --show-leak-kinds=all ./philo 0 100 100 100
+		printf "${blue}valgrind 0 nb to eat${normal}\n"
+		valgrind --track-origins=yes --leak-check=full --show-leak-kinds=all ./philo 2 100 100 100 0
+		printf "\n"
 
 		printf "${red}Error Arg Nb of Philo${normal}\n"
 		printf "${blue}< 0${normal}\n"
 		./philo -1 100 100 100
 		printf "${blue}> 200${normal}\n"
 		./philo 201 100 100 100
-		printf "${blue}empty${normal}\n"
-		./philo "" 100 100 100
-		printf "${blue}char${normal}\n"
+		printf "${blue}char/string/empty${normal}\n"
 		./philo $3 100 100 100
+		printf "${blue}valgrind < 0 / > 201\n${normal}"
+		valgrind --track-origins=yes --leak-check=full --show-leak-kinds=all ./philo -1 100 100 100
+		printf "${blue}valgrind char/string/empty${normal}\n"
+		valgrind --track-origins=yes --leak-check=full --show-leak-kinds=all ./philo $3 100 100 100
+		printf "\n"
+
 
 		printf "\n${red}Error Arg Time Die${normal}\n"
 		printf "${blue}< 60${normal}\n"
 		./philo 2 $2 100 100
-		printf "${blue}empty${normal}\n"
-		./philo 2 "" 100 100
-		printf "${blue}char${normal}\n"
+		printf "${blue}char/string/empty${normal}\n"
 		./philo 2 $3 100 100
+		printf "${blue}valgrind < 60\n${normal}"
+		valgrind --track-origins=yes --leak-check=full --show-leak-kinds=all ./philo 2 $2 100 100
+		printf "${blue}valgrind char/string/empty${normal}\n"
+		valgrind --track-origins=yes --leak-check=full --show-leak-kinds=all ./philo 2 $3 100 100
+		printf "\n"
 
 		printf "\n${red}Error Arg Time Eat${normal}\n"
 		printf "${blue}< 60${normal}\n"
 		./philo 2 100 $2 100
-		printf "${blue}empty${normal}\n"
-		./philo 2 100 "" 100
-		printf "${blue}char${normal}\n"
+		printf "${blue}char/string/empty${normal}\n"
 		./philo 2 100 $3 100
+		printf "${blue}valgrind < 60\n${normal}"
+		valgrind --track-origins=yes --leak-check=full --show-leak-kinds=all ./philo 2 100 $2 100
+		printf "${blue}valgrind char/string/empty${normal}\n"
+		valgrind --track-origins=yes --leak-check=full --show-leak-kinds=all ./philo 2 100 $3 100
+		printf "\n"
+
 
 		printf "\n${red}Error Arg Time Sleep${normal}\n"
 		printf "${blue}< 60${normal}\n"
 		./philo 2 100 100 $2
-		printf "${blue}empty${normal}\n"
+		printf "${blue}char/string/empty${normal}\n"
 		./philo 2 100 100 $3
+		printf "${blue}valgrind < 60\n${normal}"
+		valgrind --track-origins=yes --leak-check=full --show-leak-kinds=all ./philo 2 100 100 $2
+		printf "${blue}valgrind char/string/empty${normal}\n"
+		valgrind --track-origins=yes --leak-check=full --show-leak-kinds=all ./philo 2 100 100 $3
+		printf "\n"
 
 		printf "\n${red}Error Arg Time Nb to eat${normal}\n"
 		printf "${blue}< 0${normal}\n"
 		./philo 2 100 100 100 -1
 		printf "${blue}empty${normal}\n"
 		./philo 2 100 100 100 ""
-		printf "${blue}empty${normal}\n"
+		printf "${blue}char/string${normal}\n"
 		./philo 2 100 100 100 $3
+		printf "${blue}valgrind < 0\n${normal}"
+		valgrind --track-origins=yes --leak-check=full --show-leak-kinds=all ./philo 2 100 100 100 -1
+		printf "${blue}valgrind char/string/empty${normal}\n"
+		valgrind --track-origins=yes --leak-check=full --show-leak-kinds=all ./philo 2 100 100 100 $3
+		printf "\n"
 
 	elif [ $1 = "one" ] && [ $# = 2 ]
 	then

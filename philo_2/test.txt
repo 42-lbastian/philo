@@ -1,2 +1,0 @@
-valgrind --tool=helgrind
-valgrind --tool=drd
